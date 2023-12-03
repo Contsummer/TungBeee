@@ -202,6 +202,7 @@ void sapXepNVTheoTen(CongTy a) {
 }
 void timNVTheoMa(CongTy a) {
 	string ma;
+
 	cout << "\nNhap vao ma nhan vien ";
 	cin >> ma;
 	for (int i = 0; i < a.soLuongPB; i++) {
@@ -212,6 +213,7 @@ void timNVTheoMa(CongTy a) {
 			}
 		}
 	}
+	cout << "\nKhong ton tai nhan vien co ma  la " << ma;
 }
 
 void timNVTheoTen(CongTy a) {
@@ -230,7 +232,7 @@ void timNVTheoTen(CongTy a) {
 			}
 		}
 	}
-	if (tonTai == false)cout << "\nKhong ton tai nhan vien";
+	if (tonTai == false)cout << "Khong ton tai nhan vien co ten la " <<ten ;
 }
 void timNVTheoMucLuong(CongTy a) {
 
@@ -241,14 +243,14 @@ void timNVTheoMucLuong(CongTy a) {
 	cin >> luong;
 	for (int i = 0; i < a.soLuongPB; i++) {
 		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
-			if (a.danhSachPB[i].danhSachNV[j].luong = luong) {
+			if (a.danhSachPB[i].danhSachNV[j].luong == luong) {
 				tonTai = true;
 				xuatNV(a.danhSachPB[i].danhSachNV[j]);
 				cout << endl;
 			}
 		}
 	}
-	if (tonTai == false)cout << "\nKhong ton tai nhan vien";
+	if (tonTai == false)cout << "Khong ton tai nhan vien co muc luong la " << luong;
 }
 string layTen(string  name) {
 	string ten ="";
@@ -277,5 +279,74 @@ void timNVTheoThamNien(CongTy a) {
 			}
 		}
 	}
-	if(tonTai==false)cout << "\nKhong ton tai nhan vien co tham nien " << nam << "nam";
+	if(tonTai==false)cout << "\nKhong ton tai nhan vien co tham nien " << nam << " nam";
+}
+void demSoNVTungPhong(CongTy a) {
+	int chon;
+	for (int i = 0; i < a.soLuongPB; i++) {
+		cout << "\n(" << i+1 << ")" << a.danhSachPB[i].tenPhong << endl;;
+		
+	}
+	cout << "\nChon phong : "; 
+	cin >> chon;
+	cout << "So nhan vien cua phong " << a.danhSachPB[chon-1].tenPhong << " la " << a.danhSachPB[chon-1].soLuongNV;
+}
+void demSoNVCTY(CongTy a) {
+	int tong = 0; 
+	for (int i = 0; i < a.soLuongPB; i++) {
+		tong += a.danhSachPB[i].soLuongNV;
+	}
+	cout << "\nSo luong nhan vien cua cong ty la " << tong;
+}
+void xuatNVLuongThap(CongTy a) {
+	int min = a.danhSachPB[0].danhSachNV[0].luong;
+	for (int i = 0; i < a.soLuongPB; i++) {
+		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
+			if (a.danhSachPB[i].danhSachNV[j].luong < min)min = a.danhSachPB[i].danhSachNV[j].luong;
+		}
+	}
+	cout <<"\nNhan vien luong thap :" ;
+	for (int i = 0; i < a.soLuongPB; i++) {
+		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
+			if (a.danhSachPB[i].danhSachNV[j].luong == min) {
+				xuatNV(a.danhSachPB[i].danhSachNV[j]);
+				cout << endl;
+			}
+				
+		}
+	}
+}
+void xuatNVLuongCao(CongTy a) {
+	int max = a.danhSachPB[0].danhSachNV[0].luong;
+	for (int i = 0; i < a.soLuongPB; i++) {
+		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
+			if (a.danhSachPB[i].danhSachNV[j].luong > max)max = a.danhSachPB[i].danhSachNV[j].luong;
+		}
+	}
+	cout << "\nNhan vien luong cao :";
+	for (int i = 0; i < a.soLuongPB; i++) {
+		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
+			if (a.danhSachPB[i].danhSachNV[j].luong == max) {
+				xuatNV(a.danhSachPB[i].danhSachNV[j]);
+				cout << endl;
+			}
+
+		}
+	}
+}
+void thongKeBanLuong(CongTy a) {
+	for (int i = 0; i < a.soLuongPB; i++) {
+		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
+			cout << "\nHo Ten : " << a.danhSachPB[i].danhSachNV[j].tenNV << "\t Muc Luong : " << a.danhSachPB[i].danhSachNV[j].luong;
+			}
+		}
+}
+void tongLuong(CongTy a) {
+	int tong = 0;
+	for (int i = 0; i < a.soLuongPB; i++) {
+		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
+			tong += a.danhSachPB[i].danhSachNV[j].luong;
+		}
+	}
+	cout << "\nTong  luong cua cong ty la: " << tong;
 }
