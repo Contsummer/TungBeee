@@ -1,5 +1,8 @@
 #pragma once
 #include <iostream>
+#include <cstdlib>
+#include <fstream>
+#include <sstream>
 using namespace std;
 struct NgayThang {
 	int ngay; 
@@ -15,7 +18,7 @@ struct NhanVien
 	NgayThang NgaySinh;
 	NgayThang ngayVaoLam;
 	int luong;
-
+	string phongBan;
 	
 };
 struct PhongBan {
@@ -54,3 +57,8 @@ void xuatNVLuongThap(CongTy a);
 void xuatNVLuongCao(CongTy a);
 void thongKeBanLuong(CongTy a);
 void tongLuong(CongTy a);
+void sapXepNVTheoTen(CongTy& a);
+void displayMenu();
+void writeCongTyToFile(const CongTy& congTy, const  string& filename);
+void writePhongBanToFile(const PhongBan& pb, const  string& filename);
+void writeNhanVienToFile(const NhanVien& nv, const  string& filename);

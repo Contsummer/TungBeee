@@ -4,7 +4,8 @@
 //lưu tên phòng ban vào thông tin nhân vie
 int main() {
 
-	CongTy a;
+	string fileName = "employee_data.txt";
+	/*CongTy a;
 	///*nhapDSPB(a);
 	a.soLuongPB = 2; 
 	a.danhSachPB[0].maPhong = "1";
@@ -14,7 +15,7 @@ int main() {
 	a.danhSachPB[1].tenPhong = "Tung2";
 	a.danhSachPB[1].soLuongNV = 2;
 	a.danhSachPB[0].danhSachNV[0].maNV = "1";
-	a.danhSachPB[0].danhSachNV[0].tenNV = "Minh  Quan";
+	a.danhSachPB[0].danhSachNV[0].tenNV = "Minh  Zuan";
 	a.danhSachPB[0].danhSachNV[0].gioiTinh = 1; 
 	a.danhSachPB[0].danhSachNV[0].ngayVaoLam.ngay = 1;
 	a.danhSachPB[0].danhSachNV[0].ngayVaoLam.thang = 1;
@@ -24,7 +25,7 @@ int main() {
 	a.danhSachPB[0].danhSachNV[0].NgaySinh.nam = 2022;
 	a.danhSachPB[0].danhSachNV[0].luong =5; 
 	a.danhSachPB[0].danhSachNV[1].maNV = "2";
-	a.danhSachPB[0].danhSachNV[1].tenNV = "Quan2";
+	a.danhSachPB[0].danhSachNV[1].tenNV = "Auan2";
 	a.danhSachPB[0].danhSachNV[1].gioiTinh = 0;
 	a.danhSachPB[0].danhSachNV[1].ngayVaoLam.ngay = 1;
 	a.danhSachPB[0].danhSachNV[1].NgaySinh.thang = 1;
@@ -52,8 +53,8 @@ int main() {
 	a.danhSachPB[1].danhSachNV[1].ngayVaoLam.ngay = 1;
 	a.danhSachPB[1].danhSachNV[1].ngayVaoLam.thang = 1;
 	a.danhSachPB[1].danhSachNV[1].ngayVaoLam.nam = 2001;
-
-	a.danhSachPB[1].danhSachNV[1].luong = 1;
+	a.danhSachPB[1].danhSachNV[1].luong = 1;*/
+	CongTy a = readCongTyFromFile(fileName);
 	xuatDSPB(a);
 	//for (int i = 0; i < a.soLuongPB; i++) {
 	//	cout << "\n=================================";
@@ -84,5 +85,7 @@ int main() {
 	xuatNVLuongCao(a);
 	thongKeBanLuong(a);
 	tongLuong(a);
+	sapXepNVTheoTen(a);
+	//writeCongTyToFile(a, fileName);
 	return 0; 
 }

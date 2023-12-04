@@ -1,7 +1,5 @@
-﻿  Program.cpp
-  Source.cpp
+﻿  Source.cpp
 C:\Users\conts\Desktop\git\Tungbee\Tungbee\Source.cpp(118,7): warning C4101: 'trung': unreferenced local variable
 C:\Users\conts\Desktop\git\Tungbee\Tungbee\Source.cpp(257,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\conts\Desktop\git\Tungbee\Tungbee\Source.cpp(262,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Generating Code...
   Tungbee.vcxproj -> C:\Users\conts\Desktop\git\Tungbee\x64\Debug\Tungbee.exe

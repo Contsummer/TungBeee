@@ -57,6 +57,7 @@ void xuatNV(NhanVien a) {
 	cout << "\nNgay vao lam: " << a.ngayVaoLam.ngay << "/" << a.ngayVaoLam.thang << "/" << a.ngayVaoLam.nam;
 
 	cout << "\nLuong nhan vien: " << a.luong;
+	cout << "\nPhong ban: " << a.phongBan;
  }
 
 void xuatPB(PhongBan phongBan) {
@@ -64,21 +65,22 @@ void xuatPB(PhongBan phongBan) {
 	cout << "\nTen phong ban: " << phongBan.tenPhong;
 	cout << "\nSo luong nhan vien: " << phongBan.soLuongNV;
 }
-void nhapNVTrongPB(PhongBan& phongBan , CongTy cty) {
+void nhapNVTrongPB(PhongBan& b , CongTy cty) {
 	bool trung; 
 	string a;
-	cout << "\n===============" << " Phong ban " << phongBan.tenPhong<< "===============" ;
-	for (int i = 0; i < phongBan.soLuongNV;i++) {
+	cout << "\n===============" << " Phong ban " << b.tenPhong<< "===============" ;
+	for (int i = 0; i < b.soLuongNV;i++) {
 		cout << "\n Nhap vao ma nhan vien";
 		cin >> a;
 		trung = kiemTraMaTrungCTY(cty,a);
 		while (trung) {
 			cout << "\n Ma da ton tai! :Nhap lai: ";
 			cin >> a;
-			trung = kiemTraMaTrung(phongBan, a);
+			trung = kiemTraMaTrung(b, a);
 		}
-		phongBan.danhSachNV[i].maNV = a;
-		nhapNV(phongBan.danhSachNV[i]);
+		b.danhSachNV[i].maNV = a;
+		nhapNV(b.danhSachNV[i]);
+		b.danhSachNV[i].phongBan = b.tenPhong;
 	}
 }
 void xuatNVTrongPB(PhongBan phongBan) {
@@ -197,9 +199,6 @@ void suaThongTin(CongTy& a) {
 	}
 	cout << "\nKhong ton tai nhan vien"; 
 	}
-void sapXepNVTheoTen(CongTy a) {
-	
-}
 void timNVTheoMa(CongTy a) {
 	string ma;
 
@@ -350,3 +349,123 @@ void tongLuong(CongTy a) {
 	}
 	cout << "\nTong  luong cua cong ty la: " << tong;
 }
+void sapXepNVTheoTen(CongTy& a) {
+	int chon; 
+	for (int i = 0; i < a.soLuongPB; i++) {
+		cout << "\n(" << i + 1 << ")";
+		cout << a.danhSachPB[i].tenPhong;
+
+	}
+	cout << "\n Nhap vao phong ban mun sap xep: ";
+	cin >> chon; 
+	cout << "\n danh sach phong chua sap xep ";
+	chon -= 1;
+	xuatNVTrongPB(a.danhSachPB[chon]);
+	NhanVien temp;
+	for (int i = 0; i < a.danhSachPB[chon].soLuongNV-1; i++) {
+		for (int j = i + 1; j < a.danhSachPB[chon].soLuongNV; j++) {
+			if (layTen(a.danhSachPB[chon].danhSachNV[j].tenNV)[0] < layTen(a.danhSachPB[chon].danhSachNV[i].tenNV)[0]) {
+				temp = a.danhSachPB[chon].danhSachNV[i];
+				a.danhSachPB[chon].danhSachNV[i] = a.danhSachPB[chon].danhSachNV[j];
+				a.danhSachPB[chon].danhSachNV[j] = temp;
+			}
+		}
+	}
+	cout << "\n danh sach phong da sap xep ";
+	xuatNVTrongPB(a.danhSachPB[chon]);
+}
+
+
+void displayMenu() {
+	system("cls");
+	cout << "------- MENU -------" << endl;
+	cout << "1. Nhap thong tin phong ban" << endl;
+	cout << "2. Xuat danh sach nhan vien toan cong ty" << endl;
+	cout << "3. Xuat nhan vien theo tung phong" << endl;
+	cout << "4. Xuat nhan vien co tham nien > 20 nam" << endl;
+	cout << "5. Xuat danh sach nhan vien co do tuoi 20->45" << endl;
+	cout << "6. Xuat nhan vien la nu" << endl;
+	cout << "7. Xuat nhan vien da nghi viec" << endl;
+	cout << "8. Sua thong tin cua nhan vien" << endl;
+	cout << "9. Sap xep theo ten" << endl;
+	cout << "10. Sap xep theo luong" << endl;
+	cout << "11. Tim kiem nhan vien ma si" << endl;
+	cout << "12. Tim kiem nhan vien theo ten" << endl;
+	cout << "13. Tim kiem nhan vien muc luong" << endl;
+	cout << "14. Tim kiem nhan vien theo tham nien" << endl;
+	cout << "15. Dem so luong nhan vien theo tung phong" << endl;
+	cout << "16. Dem so luong nhan vien toan cong ty" << endl;
+	cout << "17. Danh sach nhan vien co luong thap nhat" << endl;
+	cout << "18. Danh sach nhan vien co luong cao nhat" << endl;
+	cout << "19. Nhan vien co thoi gian lam viec < 6 thang" << endl;
+	cout << "20. Bang luong cua ca con ty" << endl;
+	cout << "21. Luong cua toan cong ty" << endl;
+	cout << "22. Xoa nhan vien" << endl;
+	cout << "23. Di chuyen nhan vien tu phong nay sang phong khac" << endl;
+	cout << "24. Tach 1 phong thanh 2 phong" << endl;
+	cout << "25. Ghep 2 phong thanh 1 phong" << endl;
+	cout << "0. Thoat" << endl;
+	cout << "---------------------" << endl;
+}
+
+
+
+
+
+void writeNhanVienToFile(const NhanVien& nv, const  string& filename) {
+	 ofstream file(filename,  ios::app); // Mở file ở chế độ ghi tiếp vào cuối file
+	if (file.is_open()) {
+		file << "Ma nhan vien: " << nv.maNV <<  endl;
+		file << "Ten nhan vien: " << nv.tenNV <<  endl;
+		file << "Gioi tinh: " << nv.gioiTinh <<  endl;
+		file << "Ngay sinh: " << nv.NgaySinh.ngay << "/" << nv.NgaySinh.thang << "/" << nv.NgaySinh.nam <<  endl;
+		file << "Ngay vao lam: " << nv.ngayVaoLam.ngay << "/" << nv.ngayVaoLam.thang << "/" << nv.ngayVaoLam.nam <<  endl;
+		file << "Luong: " << nv.luong <<  endl;
+		file << "Phong ban: " << nv.phongBan <<  endl;
+		file << "---------------------------------------" <<  endl;
+		file.close();
+	}
+	else {
+		 cout << "Khong the mo file." <<  endl;
+	}
+}
+
+// Ghi thông tin của một phòng ban vào file
+void writePhongBanToFile(const PhongBan& pb, const  string& filename) {
+	 ofstream file(filename,  ios::app); // Mở file ở chế độ ghi tiếp vào cuối file
+
+	if (file.is_open()) {
+		file << "Ma phong: " << pb.maPhong <<  endl;
+		file << "Ten phong: " << pb.tenPhong <<  endl;
+		file << "So luong nhan vien: " << pb.soLuongNV <<  endl;
+		for (int i = 0; i < pb.soLuongNV; ++i) {
+			writeNhanVienToFile(pb.danhSachNV[i], filename); // Ghi thông tin từng nhân viên trong phòng ban
+		}
+		file << "---------------------------------------" <<  endl;
+		file.close();
+	}
+	else {
+		 cout << "Khong the mo file." <<  endl;
+	}
+}
+
+// Ghi thông tin của công ty vào file
+void writeCongTyToFile(const CongTy& congTy, const  string& filename) {
+	 ofstream file(filename, ios::app);
+
+	if (file.is_open()) {
+		file << congTy.soLuongPB <<  endl;
+		for (int i = 0; i < congTy.soLuongPB; ++i) {
+			writePhongBanToFile(congTy.danhSachPB[i], filename); // Ghi thông tin từng phòng ban trong công ty
+		}
+		file.close();
+	}
+	else {
+		 cout << "Khong the mo file." <<  endl;
+	}
+}
+
+
+
+
+
