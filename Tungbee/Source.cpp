@@ -449,13 +449,14 @@ void doc(string fileName, CongTy& a) {
 	if (file.is_open()) {
 		file >> a.soLuongPB;
 		for (int i = 0; i < a.soLuongPB; i++) {
-			getline(file, a.danhSachPB[i].maPhong);
-			getline(file, a.danhSachPB[i].maPhong);
+			file >> a.danhSachPB[i].maPhong;
+			getline(file, a.danhSachPB[i].tenPhong);
 			getline(file, a.danhSachPB[i].tenPhong);
 			file >> a.danhSachPB[i].soLuongNV;
 			for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
 				file >> a.danhSachPB[i].danhSachNV[j].maNV;
-				file >> a.danhSachPB[i].danhSachNV[j].tenNV;
+				getline(file, a.danhSachPB[i].danhSachNV[j].tenNV);
+				getline(file, a.danhSachPB[i].danhSachNV[j].tenNV);
 				file >> a.danhSachPB[i].danhSachNV[j].gioiTinh;
 				file >> a.danhSachPB[i].danhSachNV[j].NgaySinh.ngay;
 				file >> a.danhSachPB[i].danhSachNV[j].NgaySinh.thang;
