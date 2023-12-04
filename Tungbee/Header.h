@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <sstream>
+#include <string>
 using namespace std;
 struct NgayThang {
 	int ngay; 
@@ -62,3 +63,6 @@ void displayMenu();
 void writeCongTyToFile(const CongTy& congTy, const  string& filename);
 void writePhongBanToFile(const PhongBan& pb, const  string& filename);
 void writeNhanVienToFile(const NhanVien& nv, const  string& filename);
+CongTy docCTy(string fileName);
+void ghi(string fileName, CongTy a);
+void doc(string fileName, CongTy& a);

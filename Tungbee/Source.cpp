@@ -412,60 +412,60 @@ void displayMenu() {
 
 
 
-void writeNhanVienToFile(const NhanVien& nv, const  string& filename) {
-	 ofstream file(filename,  ios::app); // Mở file ở chế độ ghi tiếp vào cuối file
-	if (file.is_open()) {
-		file << "Ma nhan vien: " << nv.maNV <<  endl;
-		file << "Ten nhan vien: " << nv.tenNV <<  endl;
-		file << "Gioi tinh: " << nv.gioiTinh <<  endl;
-		file << "Ngay sinh: " << nv.NgaySinh.ngay << "/" << nv.NgaySinh.thang << "/" << nv.NgaySinh.nam <<  endl;
-		file << "Ngay vao lam: " << nv.ngayVaoLam.ngay << "/" << nv.ngayVaoLam.thang << "/" << nv.ngayVaoLam.nam <<  endl;
-		file << "Luong: " << nv.luong <<  endl;
-		file << "Phong ban: " << nv.phongBan <<  endl;
-		file << "---------------------------------------" <<  endl;
-		file.close();
-	}
-	else {
-		 cout << "Khong the mo file." <<  endl;
-	}
-}
 
-// Ghi thông tin của một phòng ban vào file
-void writePhongBanToFile(const PhongBan& pb, const  string& filename) {
-	 ofstream file(filename,  ios::app); // Mở file ở chế độ ghi tiếp vào cuối file
 
+
+void ghi(string fileName ,CongTy a ) {
+	ofstream file(fileName);
 	if (file.is_open()) {
-		file << "Ma phong: " << pb.maPhong <<  endl;
-		file << "Ten phong: " << pb.tenPhong <<  endl;
-		file << "So luong nhan vien: " << pb.soLuongNV <<  endl;
-		for (int i = 0; i < pb.soLuongNV; ++i) {
-			writeNhanVienToFile(pb.danhSachNV[i], filename); // Ghi thông tin từng nhân viên trong phòng ban
+		file << a.soLuongPB << endl;
+		for (int i = 0; i < a.soLuongPB; i++) {
+			file << a.danhSachPB[i].maPhong <<"\n";
+			file << a.danhSachPB[i].tenPhong << "\n";
+			file << a.danhSachPB[i].soLuongNV << "\n";
+			file << "\n";
+			for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
+				file << a.danhSachPB[i].danhSachNV[j].maNV << "\n"; 
+				file << a.danhSachPB[i].danhSachNV[j].tenNV << "\n";
+				file << a.danhSachPB[i].danhSachNV[j].gioiTinh << "\n";
+				file << a.danhSachPB[i].danhSachNV[j].NgaySinh.ngay << "\n";
+				file << a.danhSachPB[i].danhSachNV[j].NgaySinh.thang << "\n";
+				file << a.danhSachPB[i].danhSachNV[j].NgaySinh.nam << "\n";
+				file << a.danhSachPB[i].danhSachNV[j].ngayVaoLam.ngay << "\n";
+				file << a.danhSachPB[i].danhSachNV[j].ngayVaoLam.thang << "\n";
+				file << a.danhSachPB[i].danhSachNV[j].ngayVaoLam.nam << "\n";
+				file << a.danhSachPB[i].danhSachNV[j].luong << "\n";
+				file << a.danhSachPB[i].danhSachNV[j].phongBan << "\n";
+				file << "\n";
+			}
+			file << "\n";
 		}
-		file << "---------------------------------------" <<  endl;
-		file.close();
-	}
-	else {
-		 cout << "Khong the mo file." <<  endl;
 	}
 }
 
-// Ghi thông tin của công ty vào file
-void writeCongTyToFile(const CongTy& congTy, const  string& filename) {
-	 ofstream file(filename, ios::app);
 
+void doc(string fileName, CongTy& a) {
+	ifstream file(fileName);
 	if (file.is_open()) {
-		file << congTy.soLuongPB <<  endl;
-		for (int i = 0; i < congTy.soLuongPB; ++i) {
-			writePhongBanToFile(congTy.danhSachPB[i], filename); // Ghi thông tin từng phòng ban trong công ty
+		file >> a.soLuongPB;
+		for (int i = 0; i < a.soLuongPB; i++) {
+			getline(file, a.danhSachPB[i].maPhong);
+			getline(file, a.danhSachPB[i].maPhong);
+			getline(file, a.danhSachPB[i].tenPhong);
+			file >> a.danhSachPB[i].soLuongNV;
+			for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
+				file >> a.danhSachPB[i].danhSachNV[j].maNV;
+				file >> a.danhSachPB[i].danhSachNV[j].tenNV;
+				file >> a.danhSachPB[i].danhSachNV[j].gioiTinh;
+				file >> a.danhSachPB[i].danhSachNV[j].NgaySinh.ngay;
+				file >> a.danhSachPB[i].danhSachNV[j].NgaySinh.thang;
+				file >> a.danhSachPB[i].danhSachNV[j].NgaySinh.nam;
+				file >> a.danhSachPB[i].danhSachNV[j].ngayVaoLam.ngay;
+				file >> a.danhSachPB[i].danhSachNV[j].ngayVaoLam.thang;
+				file >> a.danhSachPB[i].danhSachNV[j].ngayVaoLam.nam;
+				file >> a.danhSachPB[i].danhSachNV[j].luong;
+			//	file >> a.danhSachPB[i].danhSachNV[j].phongBan;
+			}
 		}
-		file.close();
-	}
-	else {
-		 cout << "Khong the mo file." <<  endl;
 	}
 }
-
-
-
-
-

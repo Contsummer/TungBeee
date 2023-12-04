@@ -1,41 +1,59 @@
-So luong phong ban: 2
-Ma phong: 1
-Ten phong: Nguyen Tien Tung
-So luong nhan vien: 2
-Ma nhan vien: 2
-Ten nhan vien: Auan2
-Gioi tinh: 0
-Ngay sinh: 1/1/2022
-Ngay vao lam: 1/1/2022
-Luong: 1
-Phong ban: 
----------------------------------------
-Ma nhan vien: 1
-Ten nhan vien: Minh  Zuan
-Gioi tinh: 1
-Ngay sinh: 1/1/2022
-Ngay vao lam: 1/1/2022
-Luong: 5
-Phong ban: 
----------------------------------------
----------------------------------------
-Ma phong: 2
-Ten phong: Tung2
-So luong nhan vien: 2
-Ma nhan vien: 11
-Ten nhan vien: Quan3
-Gioi tinh: 0
-Ngay sinh: 1/1/2022
-Ngay vao lam: 1/1/2022
-Luong: 5
-Phong ban: 
----------------------------------------
-Ma nhan vien: 12
-Ten nhan vien: Quan4
-Gioi tinh: 1
-Ngay sinh: 1/1/2001
-Ngay vao lam: 1/1/2001
-Luong: 1
-Phong ban: 
----------------------------------------
----------------------------------------
+2
+1
+Nguyen Tien Tung
+2
+
+1
+Minh Zuan
+1
+1
+1
+2022
+1
+1
+2022
+5
+
+
+2
+Auan2
+0
+1
+1
+2022
+1
+1
+2022
+1
+
+
+
+2
+Tung2
+2
+
+11
+Quan3
+0
+1
+1
+2022
+1
+1
+2022
+5
+
+
+12
+Quan4
+1
+1
+1
+2001
+1
+1
+2001
+1
+
+
+

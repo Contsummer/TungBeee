@@ -5,9 +5,10 @@
 int main() {
 
 	string fileName = "employee_data.txt";
-	/*CongTy a;
+	CongTy a ;
+	doc(fileName,a);
 	///*nhapDSPB(a);
-	a.soLuongPB = 2; 
+	/*a.soLuongPB = 2; 
 	a.danhSachPB[0].maPhong = "1";
 	a.danhSachPB[0].tenPhong = "Nguyen Tien Tung";
 	a.danhSachPB[0].soLuongNV = 2;
@@ -15,7 +16,7 @@ int main() {
 	a.danhSachPB[1].tenPhong = "Tung2";
 	a.danhSachPB[1].soLuongNV = 2;
 	a.danhSachPB[0].danhSachNV[0].maNV = "1";
-	a.danhSachPB[0].danhSachNV[0].tenNV = "Minh  Zuan";
+	a.danhSachPB[0].danhSachNV[0].tenNV = "Minh Zuan";
 	a.danhSachPB[0].danhSachNV[0].gioiTinh = 1; 
 	a.danhSachPB[0].danhSachNV[0].ngayVaoLam.ngay = 1;
 	a.danhSachPB[0].danhSachNV[0].ngayVaoLam.thang = 1;
@@ -53,9 +54,8 @@ int main() {
 	a.danhSachPB[1].danhSachNV[1].ngayVaoLam.ngay = 1;
 	a.danhSachPB[1].danhSachNV[1].ngayVaoLam.thang = 1;
 	a.danhSachPB[1].danhSachNV[1].ngayVaoLam.nam = 2001;
-	a.danhSachPB[1].danhSachNV[1].luong = 1;*/
-	CongTy a = readCongTyFromFile(fileName);
-	xuatDSPB(a);
+	a.danhSachPB[1].danhSachNV[1].luong = 1;
+	ghi(fileName, a);*/
 	//for (int i = 0; i < a.soLuongPB; i++) {
 	//	cout << "\n=================================";
 	//	//cout << "\n Danh sach phong  ban " << a.danhSachPB[i].tenPhong;
