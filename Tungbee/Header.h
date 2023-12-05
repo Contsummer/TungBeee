@@ -1,9 +1,12 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
 #include <string>
+#include <ctime>
 using namespace std;
 struct NgayThang {
 	int ngay; 
@@ -30,7 +33,7 @@ struct PhongBan {
 };
 struct CongTy {
 	PhongBan danhSachPB[10];
-	int soLuongPB;
+	int soLuongPB = 0;
 };
 void nhapPB(PhongBan& PhongBan);
 void nhapNV(NhanVien& nv);
@@ -53,6 +56,7 @@ string layTen(string  name);
 void timNVTheoMucLuong(CongTy a);
 void timNVTheoThamNien(CongTy a);
 void demSoNVTungPhong(CongTy a);
+void sapXepNVTheoLuong(CongTy& a);
 void demSoNVCTY(CongTy a);
 void xuatNVLuongThap(CongTy a);
 void xuatNVLuongCao(CongTy a);
@@ -60,9 +64,10 @@ void thongKeBanLuong(CongTy a);
 void tongLuong(CongTy a);
 void sapXepNVTheoTen(CongTy& a);
 void displayMenu();
-void writeCongTyToFile(const CongTy& congTy, const  string& filename);
-void writePhongBanToFile(const PhongBan& pb, const  string& filename);
-void writeNhanVienToFile(const NhanVien& nv, const  string& filename);
-CongTy docCTy(string fileName);
 void ghi(string fileName, CongTy a);
 void doc(string fileName, CongTy& a);
+void xoa(string fileXoa, CongTy& a);
+void docNVDaxoa(string fileXoa, PhongBan& a);
+void xuatNVLam6Thang(CongTy a);
+void diChuyenNV(CongTy& a);
+bool kiemTraMaNhanVienTrung(CongTy a, string ma);

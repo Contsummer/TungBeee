@@ -3,7 +3,8 @@ void nhapPB(PhongBan& PhongBan) {
 	cout << "\nNhap ma phong: "; 
 	cin >> PhongBan.maPhong;
 	cout << "Nhap ten phong: ";
-	cin >> PhongBan.tenPhong;
+	cin.ignore();
+	getline(cin, PhongBan.tenPhong);
 	cout << "Nhap so luong nhan vien trong phong: ";
 	NhanVien dsNV[100];
 	cin >> PhongBan.soLuongNV;
@@ -12,12 +13,33 @@ void nhapNV(NhanVien& nv) {
 	/*cout << "\n Nhap ma nhan vien: ";
 	cin >> nv.maNV;*/
 	cout << "\n Nhap ten nhan vien: ";
-	cin >> nv.tenNV;
+	cin.ignore();
+	getline(cin, nv.tenNV);
 	cout << "\nNhap gioi tinh (0|1): ";
 	cin >> nv.gioiTinh;
 	while(nv.gioiTinh != 1 && nv.gioiTinh != 0) {
 		cout << "\nGioi tinh khong hop le! Nhap lai: ";
 		cin >> nv.gioiTinh;
+	}
+
+	cout << "\nNhap ngay Sinh ";
+	cout << "\nNgay: ";
+	cin >> nv.NgaySinh.ngay;
+	while (nv.NgaySinh.ngay <= 0 || nv.NgaySinh.ngay > 31) {
+		cout << "\n Ngay khong hop le! Nhap lai: ";
+		cin >> nv.NgaySinh.ngay;
+	}
+	cout << "Thang: ";
+	cin >> nv.NgaySinh.thang;
+	while (nv.NgaySinh.thang <= 0 || nv.NgaySinh.thang > 12) {
+		cout << "\n Thang khong hop le! Nhap lai: ";
+		cin >> nv.NgaySinh.thang;
+	}
+	cout << "Nam ";
+	cin >> nv.NgaySinh.nam;
+	while (nv.NgaySinh.nam <= 1950 || nv.NgaySinh.nam > 2023) {
+		cout << "\nNam khong hop le! Nhap lai: ";
+		cin >> nv.NgaySinh.nam;
 	}
 	cout << "\nNhap ngay vao lam ";
 	cout << "\nNgay: ";
@@ -70,9 +92,9 @@ void nhapNVTrongPB(PhongBan& b , CongTy cty) {
 	string a;
 	cout << "\n===============" << " Phong ban " << b.tenPhong<< "===============" ;
 	for (int i = 0; i < b.soLuongNV;i++) {
-		cout << "\n Nhap vao ma nhan vien";
+		cout << "\n Nhap vao ma nhan vien "<<i+1  <<": " ;
 		cin >> a;
-		trung = kiemTraMaTrungCTY(cty,a);
+		trung = kiemTraMaNhanVienTrung(cty,a);
 		while (trung) {
 			cout << "\n Ma da ton tai! :Nhap lai: ";
 			cin >> a;
@@ -99,13 +121,16 @@ bool kiemTraMaTrung(PhongBan a , string ma  ) {
 	return false;
 }
 void nhapDSPB(CongTy& a) {
+	int b,temp;
 	cout << "\n Nhap vao so luong phong ban: ";
-	cin >> a.soLuongPB;
+	cin >> b;
 	//a.danhSachPB[a.soLuongPB];
-	
-	for (int i = 0; i < a.soLuongPB; i++) {
+	temp = a.soLuongPB;
+	a.soLuongPB += b;
+	for (int i = temp; i < a.soLuongPB; i++) {
 		cout << "\n Phong Ban thu " << i + 1;
 		nhapPB(a.danhSachPB[i]);
+		nhapNVTrongPB(a.danhSachPB[i],a);
 	}
 }
 void xuatDSPB(CongTy a){
@@ -116,16 +141,16 @@ void xuatDSPB(CongTy a){
 		xuatPB(a.danhSachPB[i]);
 	}
 }
-bool kiemTraMaTrungCTY(CongTy a, string ma) {
-	bool trung;
-	for (int i = 0; i < a.soLuongPB; i++) {
-		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
-			if (ma == a.danhSachPB[i].danhSachNV[j].maNV)return true; 
+bool kiemTraMaNhanVienTrung(CongTy a, string ma) {
+	for (int i = 0; i < a.soLuongPB; ++i) {
+		for (int j = 0; j < a.danhSachPB[i].soLuongNV; ++j) {
+			if (a.danhSachPB[i].danhSachNV[j].maNV == ma) {
+				return true;
+			}
 		}
 	}
-	return false ;
+	return false;
 }
-
 
 void xuatNVToanCTy(CongTy a) {
 	cout << "\nNhan vien toan cong ty " << endl;
@@ -155,12 +180,35 @@ void xuatNVHon20Nam(CongTy a) {
 	}
 	if (tonTai == false)cout << "\nCong ty khong co nhan vien co tham nien hon 20 nam ";
 }
+void xuatNVLam6Thang(CongTy a) {
+	cout << "\nNhan vien lam  <6 thang";
+	bool tonTai = false;
+	time_t hienTai = time(0);
+	tm* diaPhuong = localtime(&hienTai);
+	int namHienTai = 1900 + diaPhuong->tm_year;
+	int thangHienTai = 1 + diaPhuong->tm_mon;
+	for (int i = 0; i < a.soLuongPB; i++) {
+		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
+			if (namHienTai - a.danhSachPB[i].danhSachNV[j].ngayVaoLam.nam == 0 && thangHienTai - a.danhSachPB[i].danhSachNV[j].ngayVaoLam.thang <=6) {
+				xuatNV(a.danhSachPB[i].danhSachNV[j]);
+				cout << endl;
+				tonTai = true;
+			}
+		}
+
+	}
+	if (tonTai == false)cout << "\nKhong ton tai nhan vien do tuoi 20 ->45";
+
+}
 void xuatNVTu20Den45(CongTy a) {
 	cout << "\nNhan vien do tuoi 20 ->45";
 	bool tonTai = false; 
+	time_t hienTai = time(0);
+	tm* diaPhuong = localtime(&hienTai);
+	int namHienTai = 1900 + diaPhuong->tm_year;
 	for (int i = 0; i < a.soLuongPB; i++) {
 		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
-			if(2023 - a.danhSachPB[i].danhSachNV[j].NgaySinh.nam >=20 && 2023 - a.danhSachPB[i].danhSachNV[j].NgaySinh.nam <= 45){
+			if(namHienTai - a.danhSachPB[i].danhSachNV[j].NgaySinh.nam >=20 && namHienTai - a.danhSachPB[i].danhSachNV[j].NgaySinh.nam <= 45){
 				xuatNV(a.danhSachPB[i].danhSachNV[j]);
 				cout << endl;
 
@@ -188,17 +236,25 @@ void suaThongTin(CongTy& a) {
 	string ma;
 	cout << "\nNhap vao ma nhan vien ";
 	cin >> ma; 
+	int m, n;
+	bool trung = false;
 	for (int i = 0; i < a.soLuongPB; i++) {
 		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
 			if (a.danhSachPB[i].danhSachNV[j].maNV == ma ) {
-				xuatNV(a.danhSachPB[i].danhSachNV[j]);
-				nhapNV(a.danhSachPB[i].danhSachNV[j]);
-				return;
+				trung = true;
+				m = i;
+				n = j;
 			}
 		}
 	}
-	cout << "\nKhong ton tai nhan vien"; 
+	if (trung == true) {
+	xuatNV(a.danhSachPB[m].danhSachNV[n]);
+	nhapNV(a.danhSachPB[m].danhSachNV[n]);
+	xuatNV(a.danhSachPB[m].danhSachNV[n]);
+
 	}
+	else  cout << "\nKhong ton tai nhan vien";
+ }
 void timNVTheoMa(CongTy a) {
 	string ma;
 
@@ -264,13 +320,16 @@ string layTen(string  name) {
 	return ten2;
 }
 void timNVTheoThamNien(CongTy a) {
+	time_t hienTai = time(0);
+	tm* diaPhuong = localtime(&hienTai);
+	int namHienTai = 1900 + diaPhuong->tm_year;
 	int nam;
 	bool tonTai = false;
 	cout << "\nNhap vao so nam lam viec :" ;
 	cin >> nam;
 	for (int i = 0; i < a.soLuongPB; i++) {
 		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
-			if (2023- a.danhSachPB[i].danhSachNV[j].ngayVaoLam.nam == nam ) {
+			if (namHienTai- a.danhSachPB[i].danhSachNV[j].ngayVaoLam.nam == nam ) {
 				tonTai = true;
 
 				xuatNV(a.danhSachPB[i].danhSachNV[j]);
@@ -336,7 +395,7 @@ void xuatNVLuongCao(CongTy a) {
 void thongKeBanLuong(CongTy a) {
 	for (int i = 0; i < a.soLuongPB; i++) {
 		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
-			cout << "\nHo Ten : " << a.danhSachPB[i].danhSachNV[j].tenNV << "\t Muc Luong : " << a.danhSachPB[i].danhSachNV[j].luong;
+			cout << left << setw(20) << "\nHo Ten : " << a.danhSachPB[i].danhSachNV[j].tenNV << "\t Muc Luong : " << a.danhSachPB[i].danhSachNV[j].luong;
 			}
 		}
 }
@@ -376,42 +435,82 @@ void sapXepNVTheoTen(CongTy& a) {
 }
 
 
+void sapXepNVTheoLuong(CongTy& a) {
+	int chon;
+	for (int i = 0; i < a.soLuongPB; i++) {
+		cout << "\n(" << i + 1 << ")";
+		cout << a.danhSachPB[i].tenPhong;
+
+	}
+	cout << "\n Nhap vao phong ban mun sap xep: ";
+	cin >> chon;
+	cout << "\n danh sach phong chua sap xep ";
+	chon -= 1;
+	xuatNVTrongPB(a.danhSachPB[chon]);
+	NhanVien temp;
+	for (int i = 0; i < a.danhSachPB[chon].soLuongNV - 1; i++) {
+		for (int j = i + 1; j < a.danhSachPB[chon].soLuongNV; j++) {
+			if (a.danhSachPB[chon].danhSachNV[j].luong > a.danhSachPB[chon].danhSachNV[i].luong) {
+				temp = a.danhSachPB[chon].danhSachNV[i];
+				a.danhSachPB[chon].danhSachNV[i] = a.danhSachPB[chon].danhSachNV[j];
+				a.danhSachPB[chon].danhSachNV[j] = temp;
+			}
+		}
+	}
+	cout << "\n danh sach phong da sap xep ";
+	xuatNVTrongPB(a.danhSachPB[chon]);
+}
+
 void displayMenu() {
-	system("cls");
-	cout << "------- MENU -------" << endl;
-	cout << "1. Nhap thong tin phong ban" << endl;
-	cout << "2. Xuat danh sach nhan vien toan cong ty" << endl;
-	cout << "3. Xuat nhan vien theo tung phong" << endl;
-	cout << "4. Xuat nhan vien co tham nien > 20 nam" << endl;
-	cout << "5. Xuat danh sach nhan vien co do tuoi 20->45" << endl;
-	cout << "6. Xuat nhan vien la nu" << endl;
-	cout << "7. Xuat nhan vien da nghi viec" << endl;
-	cout << "8. Sua thong tin cua nhan vien" << endl;
-	cout << "9. Sap xep theo ten" << endl;
-	cout << "10. Sap xep theo luong" << endl;
-	cout << "11. Tim kiem nhan vien ma si" << endl;
-	cout << "12. Tim kiem nhan vien theo ten" << endl;
-	cout << "13. Tim kiem nhan vien muc luong" << endl;
-	cout << "14. Tim kiem nhan vien theo tham nien" << endl;
-	cout << "15. Dem so luong nhan vien theo tung phong" << endl;
-	cout << "16. Dem so luong nhan vien toan cong ty" << endl;
-	cout << "17. Danh sach nhan vien co luong thap nhat" << endl;
-	cout << "18. Danh sach nhan vien co luong cao nhat" << endl;
-	cout << "19. Nhan vien co thoi gian lam viec < 6 thang" << endl;
-	cout << "20. Bang luong cua ca con ty" << endl;
-	cout << "21. Luong cua toan cong ty" << endl;
-	cout << "22. Xoa nhan vien" << endl;
-	cout << "23. Di chuyen nhan vien tu phong nay sang phong khac" << endl;
-	cout << "24. Tach 1 phong thanh 2 phong" << endl;
-	cout << "25. Ghep 2 phong thanh 1 phong" << endl;
-	cout << "0. Thoat" << endl;
-	cout << "---------------------" << endl;
+	int columnWidth = 40;
+	cout << "\n--------------------------------------------------------------- MENU ----------------------------------------------------" << endl;
+	cout << left << setw(columnWidth) << "| 1. Nhap thong tin phong ban" << setw(columnWidth) << "| 2. Xuat DSNV toan cong ty" << setw(columnWidth) << "| 3. Xuat nhan vien theo tung phong" << "|" << endl;
+	cout << left << setw(columnWidth) << "| 4. Nhan vien co tham nien > 20 nam" << setw(columnWidth) << "| 5. DSNV co do tuoi 20->45" << setw(columnWidth) << "| 6. Xuat nhan vien la nu" << "|" << endl;
+	cout << left << setw(columnWidth) << "| 7. Xuat nhan vien da nghi viec" << setw(columnWidth) << "| 8. Sua thong tin cua nhan vien" << setw(columnWidth) << "| 9. Sap xep theo ten" << "|" << endl;
+	cout << left << setw(columnWidth) << "| 10. Sap xep theo luong" << setw(columnWidth) << "| 11. Tim kiem nhan vien ma si" << setw(columnWidth) << "| 12. Tim kiem nhan vien theo ten" << "|" << endl;
+	cout << left << setw(columnWidth) << "| 13. Tim kiem nhan vien muc luong" << setw(columnWidth) << "| 14. Tim kiem nhan vien theo tham nien" << setw(columnWidth) << "| 15. So luong nhan vien theo tung phong" << "|" << endl;
+	cout << left << setw(columnWidth) << "| 16. So luong nhan vien toan cong ty" << setw(columnWidth) << "| 17. DSNV co luong thap nhat" << setw(columnWidth) << "| 18. DSNV co luong cao nhat" << "|" << endl;
+	cout << left << setw(columnWidth) << "| 19. NV thoi gian lam viec < 6 thang" << setw(columnWidth) << "| 20. Bang luong cua ca con ty" << setw(columnWidth) << "| 21. Luong cua toan cong ty" << "|" << endl;
+	cout << left << setw(columnWidth) << "| 22. Xoa nhan vien" << setw(columnWidth) << "| 23. chuyen nhan vien  sang phong khac" << setw(columnWidth) << "| 24. Tach 1 phong thanh 2 phong" << "|" << endl;
+	cout << left << setw(columnWidth) << "| 25. Ghep 2 phong thanh 1 phong" << setw(columnWidth) << "| 0. Thoat" << "|" << endl;
+	cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
+
 }
 
 
 
+void diChuyenNV(CongTy& a) {
+	int phongHT, phongChuyenDen,nhanVienChuyen;
+	for (int i = 0; i < a.soLuongPB; i++) {
+		cout << "(" << i + 1 << ") " << a.danhSachPB[i].tenPhong<<endl;
+	}
+	cout << "\n ban muon chuyen nhan vien o phong nao ";
+	cin >> phongHT;
+	phongHT -= 1;
+	for (int i = 0; i < a.danhSachPB[phongHT].soLuongNV; i++) {
+		cout << "(" << i + 1 << ") " << a.danhSachPB[phongHT].danhSachNV[i].maNV << "\t" << a.danhSachPB[phongHT].danhSachNV[i].tenNV <<endl;
+	}
+	cout << "\n ban muon chi chuyen nhan vien nao ";
+	cin >> nhanVienChuyen;
+	nhanVienChuyen -= 1;
+	for (int i = 0; i < a.soLuongPB; i++) {
+		cout << "(" << i + 1 << ") " << a.danhSachPB[i].tenPhong << endl;
+	}
+	cout << "\n ban muon chuyen nhan vien den phong  nao ";
+	cin >> phongChuyenDen;
+	phongChuyenDen -= 1;
+	NhanVien b = a.danhSachPB[phongHT].danhSachNV[nhanVienChuyen];
+	b.phongBan = a.danhSachPB[phongChuyenDen].tenPhong;
+	int temp = a.danhSachPB[phongChuyenDen].soLuongNV;
+	a.danhSachPB[phongChuyenDen].danhSachNV[temp] = b;
+	a.danhSachPB[phongChuyenDen].soLuongNV++;
 
-
+	for (int i = nhanVienChuyen; i < a.danhSachPB[phongHT].soLuongNV - 1; ++i) {
+		a.danhSachPB[phongHT].danhSachNV[i] = a.danhSachPB[phongHT].danhSachNV[i + 1];
+	}
+	a.danhSachPB[phongHT].soLuongNV--;
+	cout << "Da chuyen nhan vien " << b.maNV << " den phong " << a.danhSachPB[phongChuyenDen].tenPhong << endl;
+}
 
 
 
@@ -443,6 +542,113 @@ void ghi(string fileName ,CongTy a ) {
 	}
 }
 
+void xoa(string fileXoa, CongTy& a) {
+	ofstream file(fileXoa,ios::app );
+	xuatDSPB(a);
+	int chon,chon2;
+		NhanVien c; 
+	for (int i = 0; i < a.soLuongPB; i++) {
+		cout << "\n(" << i + 1 << ")" << a.danhSachPB[i].tenPhong << endl;
+	}
+	cout << "\nNhap vao phong ban co nhan vien muon xoa ";
+	cin >> chon;
+	chon -= 1;
+	for (int i = 0; i < a.danhSachPB[chon].soLuongNV; i++) {
+		cout << "(" << i + 1 << ")" << "Ma nhan vien " << a.danhSachPB[chon].danhSachNV[i].maNV << " ten nhan vien :" << a.danhSachPB[chon].danhSachNV[i].tenNV << endl;
+	}cout << "\n chon nhan vien muon xoa ";
+	cin >> chon2;
+	chon2 -= 1;
+	 c = a.danhSachPB[chon].danhSachNV[chon2];
+	if (file.is_open()) {
+		file << c.maNV<<"\n";
+		file << c.tenNV<<"\n";
+		file << c.gioiTinh<<"\n";
+		file << c.NgaySinh.ngay<<"\n";
+		file << c.NgaySinh.thang<<"\n";
+		file << c.NgaySinh.nam<<"\n";
+		file << c.ngayVaoLam.ngay<<"\n";
+		file << c.ngayVaoLam.thang<<"\n";
+		file << c.ngayVaoLam.nam<<"\n";
+		file << c.luong<<"\n";
+		file << c.phongBan<<"\n";
+
+		file.close();
+	}
+	for (int i = 0; i < a.danhSachPB[chon].soLuongNV; i++) {
+		if (a.danhSachPB[chon].danhSachNV[chon2].maNV == c.maNV) {
+			for (int j = i + 1; j < a.danhSachPB[chon].soLuongNV; j++) {
+				a.danhSachPB[chon].danhSachNV[i] = a.danhSachPB[chon].danhSachNV[j];
+			}
+			a.danhSachPB[chon].soLuongNV--;
+			cout << "\n Da xoa nhanh vien";
+			return;
+		}
+	}
+}
+
+
+
+
+
+
+void docNVDaxoa(string fileXoa, PhongBan& a) {
+	ifstream file(fileXoa);
+	a.soLuongNV = 0;
+	int i = 0;
+	if (file.is_open()) {
+		while (file.eof() != true) {
+			switch (i)
+			{
+			case 0:
+				file >> a.danhSachNV[a.soLuongNV].maNV;
+				i++;
+				break;
+			case 1:
+				getline(file, a.danhSachNV[a.soLuongNV].tenNV);
+				getline(file, a.danhSachNV[a.soLuongNV].tenNV);
+				i++;
+				break;
+			case 2: 
+				file >> a.danhSachNV[a.soLuongNV].gioiTinh;
+				i++;
+				break;
+			case 3:
+				file >> a.danhSachNV[a.soLuongNV].NgaySinh.ngay;
+				i++; break;
+			case 4:
+				file >> a.danhSachNV[a.soLuongNV].NgaySinh.thang;
+				i++; break;
+			case 5:
+				file >> a.danhSachNV[a.soLuongNV].NgaySinh.nam;
+				i++; break;
+			case 6:
+				file >> a.danhSachNV[a.soLuongNV].ngayVaoLam.ngay;
+				i++; break;
+			case 7:
+				file >> a.danhSachNV[a.soLuongNV].ngayVaoLam.thang;
+				i++; break;
+			case 8:
+				file >> a.danhSachNV[a.soLuongNV].ngayVaoLam.nam;
+				i++; break;
+			case 9:
+				file >> a.danhSachNV[a.soLuongNV].luong;
+				i++; break;
+			case 10:
+				file >> a.danhSachNV[a.soLuongNV].phongBan;
+				i=0; 
+				a.soLuongNV++;
+				break;
+
+			default:
+				break;
+			}
+		}
+	}
+
+}
+
+
+
 
 void doc(string fileName, CongTy& a) {
 	ifstream file(fileName);
@@ -465,7 +671,9 @@ void doc(string fileName, CongTy& a) {
 				file >> a.danhSachPB[i].danhSachNV[j].ngayVaoLam.thang;
 				file >> a.danhSachPB[i].danhSachNV[j].ngayVaoLam.nam;
 				file >> a.danhSachPB[i].danhSachNV[j].luong;
-			//	file >> a.danhSachPB[i].danhSachNV[j].phongBan;
+				getline(file, a.danhSachPB[i].danhSachNV[j].phongBan);
+				getline(file, a.danhSachPB[i].danhSachNV[j].phongBan);
+
 			}
 		}
 	}
