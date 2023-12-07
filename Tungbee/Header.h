@@ -35,7 +35,7 @@ struct CongTy {
 	PhongBan danhSachPB[10];
 	int soLuongPB = 0;
 };
-void nhapPB(PhongBan& PhongBan);
+void nhapPB(CongTy a, PhongBan& PhongBan);
 void nhapNV(NhanVien& nv);
 void xuatNV(NhanVien a);
 void nhapNVTrongPB(PhongBan& phongBan,CongTy cty);
@@ -71,3 +71,6 @@ void docNVDaxoa(string fileXoa, PhongBan& a);
 void xuatNVLam6Thang(CongTy a);
 void diChuyenNV(CongTy& a);
 bool kiemTraMaNhanVienTrung(CongTy a, string ma);
+bool kiemTraMaTrungCTY(CongTy a, string ma);
+void tachPhong(CongTy& a); 
+void gopPhong(CongTy& a);
