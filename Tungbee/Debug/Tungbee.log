@@ -1,4 +1,4 @@
-﻿  Program.cpp
-  Source.cpp
-  Generating Code...
+﻿  Source.cpp
+D:\giy\TungBeee\Tungbee\Source.cpp(270,6): warning C4101: 'm': unreferenced local variable
+D:\giy\TungBeee\Tungbee\Source.cpp(270,9): warning C4101: 'n': unreferenced local variable
   Tungbee.vcxproj -> D:\giy\TungBeee\Debug\Tungbee.exe

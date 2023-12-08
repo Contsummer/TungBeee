@@ -127,17 +127,14 @@ int main() {
         case 24:
             tachPhong(a);
             break;
-        case 25:
-            // Xử lý ghép 2 phòng thành 1 phòng
-            // ghepPhong(a);
-            break;
+       
         case 26:
             ghi(fileName,a);
             break;
         case 27:
             doc(fileName, a);
             break;
-        case 28:
+        case 25:
             gopPhong(a);
             break;
         default:
