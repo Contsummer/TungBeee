@@ -42,6 +42,10 @@ int main() {
                 cout << "(" << i + 1 << ")" << a.danhSachPB[i].tenPhong<<endl ;
             }
             cin >> vitri;
+            while (vitri > a.soLuongPB || vitri < 0) {
+                cout << "\nVi tri sai: Nhap lai:";
+                cin >> vitri;
+            }
             xuatNVTrongPB(a.danhSachPB[vitri-1]);
             break;
         case 4:
