@@ -1,6 +1,5 @@
 ﻿#include"Header.h"
 int main() {
-
 	string fileName = "employee_data.txt";
 	string fileNameXoa = "xoa.txt";
 	CongTy a ;
@@ -110,7 +109,6 @@ int main() {
             break;
         case 20:
          //   system("cls");
-
             thongKeBanLuong(a); 
             break;
         case 21:
