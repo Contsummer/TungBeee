@@ -86,7 +86,7 @@ void xuatNV(NhanVien a) {
 
 	cout << "\nNgay vao lam: " << a.ngayVaoLam.ngay << "/" << a.ngayVaoLam.thang << "/" << a.ngayVaoLam.nam;
 
-	cout << "\nLuong nhan vien: " << a.luong;
+	cout << "\nHe So: " << a.luong;
 	cout << "\nPhong ban: " << a.phongBan;
  }
 
@@ -419,15 +419,15 @@ void xuatNVLuongCao(CongTy a) {
 void thongKeBanLuong(CongTy a) {
 	for (int i = 0; i < a.soLuongPB; i++) {
 		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
-			cout << left << setw(5) << "\nHo Ten : " << left << setw(20) << a.danhSachPB[i].danhSachNV[j].tenNV << " Muc Luong : " << a.danhSachPB[i].danhSachNV[j].luong;
+			cout << left << setw(5) << "\nHo Ten : " << left << setw(20) << a.danhSachPB[i].danhSachNV[j].tenNV << " Muc Luong : " << tinhLuong(a.danhSachPB[i].danhSachNV[j].luong,1000,0);
 			}
 		}
 }
 void tongLuong(CongTy a) {
-	int tong = 0;
+	long tong = 0;
 	for (int i = 0; i < a.soLuongPB; i++) {
 		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
-			tong += a.danhSachPB[i].danhSachNV[j].luong;
+			tong += tinhLuong(a.danhSachPB[i].danhSachNV[j].luong, 1000, 0);
 		}
 	}
 	cout << "\nTong  luong cua cong ty la: " << tong;
@@ -493,6 +493,9 @@ void sapXepNVTheoLuong(CongTy& a) {
 	xuatNVTrongPB(a.danhSachPB[chon]);
 }
 
+
+
+
 void displayMenu() {
 	int columnWidth = 40;
 	cout << "\n--------------------------------------------------------------- MENU ----------------------------------------------------" << endl;
@@ -505,7 +508,8 @@ void displayMenu() {
 	cout << left << setw(columnWidth) << "| 19. NV thoi gian lam viec < 6 thang" << setw(columnWidth) << "| 20. Bang luong cua ca con ty" << setw(columnWidth) << "| 21. Luong cua toan cong ty" << "|" << endl;
 	cout << left << setw(columnWidth) << "| 22. Xoa nhan vien" << setw(columnWidth) << "| 23. chuyen nhan vien  sang phong khac" << setw(columnWidth) << "| 24. Tach 1 phong thanh 2 phong" << "|" << endl;
 	cout << left << setw(columnWidth) << "| 25. Ghep 2 phong thanh 1 phong" << setw(columnWidth) << "| 0. Thoat" << "| 26 ghi file " << setw(columnWidth) << "27. Doc" << endl;
-	cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
+	cout << left << setw(columnWidth) << "| 28. Sinh nhat cua toan cong ty" << setw(columnWidth) << "|29. Chon ngau nhien n trong cong ty"  ;
+	cout << "\n-------------------------------------------------------------------------------------------------------------------------" << endl;
 
 }
 
@@ -791,4 +795,89 @@ void gopPhong(CongTy& a) {
 		a.danhSachPB[i] = a.danhSachPB[i + 1];
 	}
 	a.soLuongPB--;
+}
+int tinhLuong(int heSo, int luongCB, int soNgayNghi) {
+	return heSo * luongCB * ((26 - soNgayNghi) / 26);
+ }
+void xuatNV(NhanVien a,int soNgayNghi) {
+	cout << "\nMa nhan vien: " << a.maNV;
+	cout << "\nTen nhan vien: " << a.tenNV;
+	cout << "\nGioi tinh nhan vien: ";
+	if (a.gioiTinh == 1)cout << "nam";
+	else cout << "nu";
+	cout << "\nNgay vao sinh: " << a.NgaySinh.ngay << "/" << a.NgaySinh.thang << "/" << a.NgaySinh.nam;
+
+	cout << "\nNgay vao lam: " << a.ngayVaoLam.ngay << "/" << a.ngayVaoLam.thang << "/" << a.ngayVaoLam.nam;
+
+	cout << "\nLuong nhan vien: " << tinhLuong(a.luong,1000,soNgayNghi);
+	cout << "\nPhong ban: " << a.phongBan;
+}
+void sinhNhatNV(CongTy a) {
+	for (int i = 0; i < a.soLuongPB; i++) {
+		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
+			cout << "\nMa NV: " << a.danhSachPB[i].danhSachNV[j].maNV << "  ten : " << a.danhSachPB[i].danhSachNV[j].tenNV<<"  sinh nhat cach " 
+				<< soNgayDenSinhNhat(a.danhSachPB[i].danhSachNV[j].NgaySinh.ngay, a.danhSachPB[i].danhSachNV[j].NgaySinh.thang) << " ngay";
+		}
+	}
+}
+
+int soNgayDenSinhNhat(int ngaySN, int thangSN) {
+	time_t hienTai = time(nullptr);
+	tm* currentTime =  localtime(&hienTai);
+	tm sinhNhat = *currentTime;
+	sinhNhat.tm_mon = thangSN - 1;
+	sinhNhat.tm_mday=ngaySN;
+	
+	if (mktime(&sinhNhat) < hienTai) {
+		sinhNhat.tm_year += 1;
+	}
+	time_t ngay = mktime(&sinhNhat);
+	double soGiay = difftime(ngay, hienTai);
+	int daysLeft = static_cast<int>(soGiay / (60 * 60 * 24)); // Chuyển từ giây sang ngày
+	return daysLeft;
+}
+void chonNgauNhien(CongTy a){
+	int tongNV = 0;
+	for (int i = 0; i < a.soLuongPB; i++) {
+		tongNV += a.danhSachPB[i].soLuongNV;
+	}
+	NhanVien bang[100];
+	int n = 0;
+	for (int i = 0; i < a.soLuongPB; i++) {
+		for (int j = 0; j < a.danhSachPB[i].soLuongNV; j++) {
+			bang[n++] = a.danhSachPB[i].danhSachNV[j];
+		}
+	}
+	int soNVLay;
+	cout << "\nNhap vao so nhan vien muon chon : ";
+	cin >> soNVLay;
+	while (soNVLay > tongNV) {
+		cout << "\n khong du so luon nhan vien:Nhap lai : ";
+		cin >> soNVLay;
+
+	}
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<> dis(0, tongNV - 1);
+
+	cout << "Cac nhan vien duoc chon ngau nhien:\n";
+	int trung[1000];
+	n = 0;
+	for (int i = 0; i < soNVLay; ++i) {
+	int so;
+	bool flag; 
+	do {
+		so = dis(gen);
+		flag = false;
+		for (int k = 0; k < n; k++) {
+			if (so == trung[k]) {
+				flag = true; // Số ngẫu nhiên trùng lặp, đặt cờ flag
+				break;
+			}
+		}
+	} while (flag);
+		cout << "Ten: " << bang[so].tenNV << " - Ma: " << bang[so].maNV << endl;
+		trung[n++] = so;
+		
+	}
 }

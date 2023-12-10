@@ -1,5 +1,11 @@
-﻿  Source.cpp
-C:\Users\conts\Desktop\git\Tungbee\Tungbee\Source.cpp(118,7): warning C4101: 'trung': unreferenced local variable
-C:\Users\conts\Desktop\git\Tungbee\Tungbee\Source.cpp(257,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\conts\Desktop\git\Tungbee\Tungbee\Source.cpp(262,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+﻿  Program.cpp
+C:\Users\conts\Desktop\git\Tungbee\Tungbee\Program.cpp(8,9): warning C4101: 'luongCB': unreferenced local variable
+  Source.cpp
+C:\Users\conts\Desktop\git\Tungbee\Tungbee\Source.cpp(270,6): warning C4101: 'm': unreferenced local variable
+C:\Users\conts\Desktop\git\Tungbee\Tungbee\Source.cpp(270,9): warning C4101: 'n': unreferenced local variable
+C:\Users\conts\Desktop\git\Tungbee\Tungbee\Source.cpp(341,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\conts\Desktop\git\Tungbee\Tungbee\Source.cpp(346,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\conts\Desktop\git\Tungbee\Tungbee\Source.cpp(851,11): warning C4566: character represented by universal-character-name '\u1EA1' cannot be represented in the current code page (1252)
+  Generating Code...
+  LINK : C:\Users\conts\Desktop\git\Tungbee\x64\Debug\Tungbee.exe not found or not built by the last incremental link; performing full link
   Tungbee.vcxproj -> C:\Users\conts\Desktop\git\Tungbee\x64\Debug\Tungbee.exe

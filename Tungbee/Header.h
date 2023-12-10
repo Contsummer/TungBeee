@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <string>
 #include <ctime>
+#include <random>
 using namespace std;
 struct NgayThang {
 	int ngay; 
@@ -74,3 +75,8 @@ bool kiemTraMaNhanVienTrung(CongTy a, string ma);
 bool kiemTraMaTrungCTY(CongTy a, string ma);
 void tachPhong(CongTy& a); 
 void gopPhong(CongTy& a);
+int tinhLuong(int heSo, int luongCB, int soNgayNghi);
+void xuatNV(NhanVien a, int soNgayNghi);
+int soNgayDenSinhNhat(int ngaySN, int thangSN);
+void sinhNhatNV(CongTy a);
+void chonNgauNhien(CongTy a);

@@ -5,6 +5,7 @@ int main() {
 	CongTy a ;
 	//doc(fileName,a);
 	int choice;
+    int luongCB;
     PhongBan b; 
     do {
         displayMenu();
@@ -134,6 +135,12 @@ int main() {
             break;
         case 25:
             gopPhong(a);
+            break;
+        case 28:
+            sinhNhatNV(a);
+            break;
+        case 29:
+            chonNgauNhien(a);
             break;
         default:
             cout << "Lua chon khong hop le. Vui long chon lai!" << endl;
